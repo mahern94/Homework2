@@ -1,1 +1,1 @@
-This is the githuub homework assignment based on homework 1 submission
+This is the github homework assignment based on homework 1 submission
