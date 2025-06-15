@@ -1,1 +1,1 @@
-This is the homework 2 assignment
+This is the githuub homework assignment based on homework 1 submission
