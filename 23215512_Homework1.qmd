@@ -65,3 +65,5 @@ ggplot(data = df, aes(x=reorder(Animals,-brain_body_ratio),
 - The average brain-to-body ratio is `r round(mean(df$brain_body_ratio),2)`. This means that the weight of the brain represents approximately 1% of the body weight of the animal for all the species combined. This will obviously vary depending on the animal in question. 
 
 - The standard deviation is `r round(sqrt(var(df$brain_body_ratio),2))`
+
+- There are many animals in this dataset.
