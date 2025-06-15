@@ -1,0 +1,65 @@
+---
+title: "<span style='display:block;margin-top:-5%;font-size: 70%; color: #00427A;'>STAT40830<br> A quick analysis of brain and body weights for 28 species of land animals </span>"
+author: "*Matthew Ahern*"
+footer: "STAT40830 Homework Assignment 1" 
+format:
+  revealjs: 
+    slide-number: true
+    incremental: false
+    auto-stretch: false
+    embed-resources: true
+urlcolor: blue
+progress: true
+controls: true
+execute: 
+  eval: true
+  echo: false
+---
+
+## 1. Selected Package and Dataset - `MASS` {.small}
+
+- I selected the **MASS** package for this example and used the **animals** dataset. This dataset contains measurements of the average body and brain weights for 28 species of land animals. 
+
+- The variables are: 
+  + *body* which measures body weight in kg; and 
+  + *brain* which measures brain weight in g. 
+
+- A new variable *brain_kg* is created for the purposes of this assignment so the scale is consistent with the *body* variable.
+
+## 2. Plot {.smaller}
+
+- Barplot showing the ratio of *brain* to *body* weight in descending order.
+  
+```{r}
+#| label: plot-barplot
+#| eval: true
+#| warning: false
+
+# loading required packages
+library(MASS)
+library(ggplot2)
+
+df <- Animals # assignment of 
+df$brain_kg <- Animals$brain/1000 # converting brain weight to kg, as it's measured in grams in the dataset
+df$brain_body_ratio <- df$brain_kg / df$body # calculate ratio
+df$Animals <- as.factor(rownames(df)) # create separate column for animal names and specify as a factor, which will be used later for plotting purposes
+
+# below code generates a bar plot of brain-to-body ratios in descending order
+ggplot(data = df, aes(x=reorder(Animals,-brain_body_ratio),
+                       y=brain_body_ratio, fill = Animals)) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  labs(x="Animal",y="Brain-to-Body ratio") +
+  theme(axis.text.x = element_text(angle=90))
+```
+
+## 3. Commentary {.smaller}
+
+- I chose to display a ratio of brain-to-body weight as the data contains a broad range of different types of animals from small rodents to large dinosaurs to enable more meaningful comparison between land animals.
+
+- The plot shows the top-5 land animals based on brain-to-body weight is dominated by rodents and monkeys/humans. 
+
+- There is a wide range of brain-to-body ratios as evidenced by the plot, where the brain-to-body ratios of large land animals (e.g. Triceratops, Dipliodocus) are comparatively tiny compared to mammals of more recent time origin.
+
+- The average body weight in kg is `r round(mean(df$body),2)`. The average brain weight in kg is `r round(mean(df$brain_kg),2)`. The average body weight figure is heavily skewed due to the inclusion of dinosaurs in the dataset.
+
+- The average brain-to-body ratio is `r round(mean(df$brain_body_ratio),2)`. This means that the weight of the brain represents approximately 1% of the body weight of the animal for all the species combined. This will obviously vary depending on the animal in question. 
